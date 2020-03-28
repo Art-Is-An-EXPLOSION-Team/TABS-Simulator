@@ -10,25 +10,31 @@ namespace Unity.Transforms
     public class MoveForwardSystem : JobComponentSystem
     {
         [BurstCompile]
-        [RequireComponentTag(typeof(MoveForward))]
-        struct MoveForwardRotation : IJobForEach<Translation, Rotation, MoveSpeed>
+        struct MoveForwardRotation : IJobForEach<Translation, Rotation, MoveForward>
         {
             public float dt;
 
-            public void Execute(ref Translation pos, [ReadOnly] ref Rotation rot, [ReadOnly] ref MoveSpeed speed)
+            public void Execute(ref Translation pos, [ReadOnly] ref Rotation rot, [ReadOnly] ref MoveForward moveForward)
             {
-                pos.Value = pos.Value + (dt * speed.Value * math.forward(rot.Value));
+                pos.Value = pos.Value + (dt * moveForward.Speed * math.forward(rot.Value));
             }
         }
 
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        protected override JobHandle OnUpdate(JobHandle input)
         {
-            var moveForwardRotationJob = new MoveForwardRotation
+            float dt = Time.DeltaTime;
+
+            MoveForwardRotation sd = new MoveForwardRotation
             {
                 dt = Time.DeltaTime
             };
 
-            return moveForwardRotationJob.Schedule(this, inputDeps);
+            return sd.Schedule(this, input);
+            // Entities.ForEach((ref Translation pos, in Rotation rot, in MoveForward moveForward) =>
+            // {
+            //     pos.Value = pos.Value + (dt * moveForward.Speed * math.forward(rot.Value));
+            // }).ScheduleParallel();
+
         }
     }
 }

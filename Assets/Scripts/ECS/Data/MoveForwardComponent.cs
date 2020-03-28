@@ -1,6 +1,9 @@
 ﻿using System;
 using Unity.Entities;
 
-[Serializable]
-public struct MoveForward : IComponentData{}
+[GenerateAuthoringComponent]
+public struct MoveForward : IComponentData
+{
+    public float Speed;
+}
 

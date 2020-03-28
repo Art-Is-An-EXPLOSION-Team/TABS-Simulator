@@ -1,8 +1,8 @@
 ﻿using System;
 using Unity.Entities;
 
-[Serializable]
+[GenerateAuthoringComponent]
 public struct TimeToLive : IComponentData
 {
-	public float Value;
+    public float Value;
 }
