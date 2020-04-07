@@ -5,6 +5,7 @@ using Unity.Collections;
 using Unity.Transforms;
 using Unity.Physics;
 using MLAgents.Policies;
+using MLAgents.SideChannels;
 
 public class PenguinAgent : AgentECS
 {
@@ -15,11 +16,13 @@ public class PenguinAgent : AgentECS
     public float normalAttackCD = 2f;
 
     private float normalAttackTimeCounter = 0f;
-    private float detectionCounter = 0f;
 
     public Transform bulletSpawnPos;
     public GameObject bulletPrefab;
     private Entity bulletEntityPrefab;
+
+    TimedDestroySystem timedDestroySystem;
+    FloatPropertiesChannel m_FloatProperties;
 
     #region  ML-Agents
 
@@ -29,21 +32,13 @@ public class PenguinAgent : AgentECS
 
         var settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, blobAssetStore);
         bulletEntityPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(bulletPrefab, settings);
+        timedDestroySystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<TimedDestroySystem>();
+        m_FloatProperties = SideChannelUtils.GetSideChannel<FloatPropertiesChannel>();
 
         SetResetParams();
     }
 
-    /// <summary>
-    /// Perform actions based on a vector of numbers
-    /// </summary>
-    /// <param name="vectorAction">The list of actions to take</param>
-    public override void OnActionReceived(float[] vectorAction)
-    {
-        if (Alive == false || agentEntity == new Entity()) return;
-        MoveAgent(vectorAction);
-    }
-
-    public void MoveAgent(float[] vectorAction)
+    protected override void PerformAction(float[] vectorAction)
     {
         float vertical = vectorAction[0] - 1;
         float horizontal = vectorAction[1] - 1;
@@ -57,7 +52,7 @@ public class PenguinAgent : AgentECS
             SetAnimation("Idle");
 
         // Apply movement
-        rigidbody.MovePosition(transform.position + dir * moveSpeed * Time.deltaTime);
+        agentRb.MovePosition(transform.position + dir * moveSpeed * Time.deltaTime);
         transform.Rotate(transform.up * turn * turnSpeed * Time.deltaTime);
 
         if (Time.time > detectionCounter + detectionCD)
@@ -133,37 +128,20 @@ public class PenguinAgent : AgentECS
         return new float[] { vertical, horizontal, turn, attack };
     }
 
-
-    /// <summary>
-    /// Reset the agent and area
-    /// </summary>
-    public override void OnEpisodeBegin()
+    public override void SetResetParams()
     {
-        area.OnEpisodeBegin();
-        SetResetParams();
-
-        gameObject.tag = teamID == TeamID.TeamOne ? "TeamOne" : "TeamTwo";
-        transform.rotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
-        transform.position = area.GetSpawnPos(teamID);
-        rigidbody.velocity = Vector3.zero;
-        rigidbody.angularVelocity = Vector3.zero;
-    }
-
-    private void SetResetParams()
-    {
-        //Agent's reward is reset to 0 on each episode's beginning
-        if (agentEntity != new Entity())
-            entityManager.SetComponentData(agentEntity, new AgentData { Reward = 0, teamID = this.teamID, health = this.health });
-        //entityManager.CompleteAllJobs();
         SetAnimation("Idle");
-
-        //cirrculum learning settings
-        moveSpeed = Academy.Instance.FloatProperties.GetPropertyWithDefault("move_speed", moveSpeed);
-        normalAttackRange = Academy.Instance.FloatProperties.GetPropertyWithDefault("attack_range", normalAttackRange);
+        if (agentEntity != new Entity())
+        {
+            //Clear the existing useless Projectile
+            timedDestroySystem.DestroyProjectile(agentEntity);
+        }
+        //cirrculum learning settings      
+        moveSpeed = m_FloatProperties.GetPropertyWithDefault("move_speed", moveSpeed);
+        normalAttackRange = m_FloatProperties.GetPropertyWithDefault("attack_range", normalAttackRange);
     }
 
     #endregion
-
 
     #region Attack
 

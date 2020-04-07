@@ -219,6 +219,67 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 2335166942858079086}
   textMeshPro: {fileID: 1382316913}
+--- !u!1 &2374619114927160145
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2936571944705123930}
+  - component: {fileID: 6289639068115399313}
+  m_Layer: 0
+  m_Name: ReverseSensor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2936571944705123930
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2374619114927160145}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4415695475985398734}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &6289639068115399313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2374619114927160145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: TeamTwoBack
+  m_DetectableTags:
+  - wall
+  - TeamTwo
+  - TeamOne
+  - dead
+  m_RaysPerDirection: 2
+  m_MaxRayDegrees: 70
+  m_SphereCastRadius: 0.5
+  m_RayLength: 40
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967291
+  m_ObservationStacks: 1
+  rayHitColor: {r: 1, g: 0, b: 0, a: 1}
+  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
+  m_StartVerticalOffset: 0
+  m_EndVerticalOffset: 0
 --- !u!1 &4418071436498150626
 GameObject:
   m_ObjectHideFlags: 0
@@ -1048,7 +1109,7 @@ Transform:
   m_GameObject: {fileID: 4418522933482666192}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4415319198769536998}
   - {fileID: 4420671521104023514}
@@ -2145,7 +2206,6 @@ GameObject:
   - component: {fileID: 1053038497755146139}
   - component: {fileID: 2335166942858079086}
   - component: {fileID: 2878617735302857505}
-  - component: {fileID: 4473686120123087512}
   - component: {fileID: 935800096948407546}
   - component: {fileID: 935800096948407545}
   - component: {fileID: 935800096948407547}
@@ -2165,11 +2225,12 @@ Transform:
   m_GameObject: {fileID: 4419016185423584782}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.6, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4415626566152044548}
   - {fileID: 7059484862732074252}
   - {fileID: 1382316911}
+  - {fileID: 2936571944705123930}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2186,7 +2247,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 0a7e9bbae0ee147418406f42811d03c0, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -2320,7 +2381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    vectorObservationSize: 0
+    vectorObservationSize: 2
     numStackedVectorObservations: 1
     vectorActionSize: 03000000030000000300000002000000
     vectorActionDescriptions: []
@@ -2348,18 +2409,20 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   maxStep: 5000
   m_RequestDecision: 0
+  m_StepCount: 0
   health: 100
   moveSpeed: 5
-  turnSpeed: 90
+  turnSpeed: 180
   teamID: 1
   Alive: 1
-  detectionAccuracy: 5
+  detectionAccuracy: 6
   detectionAngle: 60
   detectionCD: 0.5
-  meleeAttackRange: 10
+  meleeAttackRange: 3
   meleeAttackDamage: 40
   meleeAttackCD: 2
-  meleeAttackForce: 5
+  meleeAttackForce: 10
+  hitReward: 0.2
 --- !u!114 &2878617735302857505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2381,37 +2444,7 @@ MonoBehaviour:
   m_RaysPerDirection: 4
   m_MaxRayDegrees: 60
   m_SphereCastRadius: 0.5
-  m_RayLength: 20
-  m_RayLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967291
-  m_ObservationStacks: 1
-  rayHitColor: {r: 1, g: 0, b: 0, a: 1}
-  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
-  m_StartVerticalOffset: 0
-  m_EndVerticalOffset: 0
---- !u!114 &4473686120123087512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4419016185423584782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SensorName: TeamTwoBack
-  m_DetectableTags:
-  - wall
-  - TeamTwo
-  - TeamOne
-  - dead
-  m_RaysPerDirection: 3
-  m_MaxRayDegrees: 70
-  m_SphereCastRadius: 0.5
-  m_RayLength: 20
+  m_RayLength: 40
   m_RayLayerMask:
     serializedVersion: 2
     m_Bits: 4294967291
@@ -2429,12 +2462,12 @@ Rigidbody:
   m_GameObject: {fileID: 4419016185423584782}
   serializedVersion: 2
   m_Mass: 10
-  m_Drag: 0
-  m_AngularDrag: 4.35
+  m_Drag: 0.5
+  m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &935800096948407545
 CapsuleCollider:
@@ -2446,10 +2479,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.85
-  m_Height: 3
+  m_Radius: 0.425
+  m_Height: 1.5
   m_Direction: 2
-  m_Center: {x: 0, y: 0.81, z: 0}
+  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!114 &935800096948407547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3221,22 +3254,22 @@ PrefabInstance:
     - target: {fileID: 185124104968211752, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}
       propertyPath: m_PrimitiveCenter.y
-      value: 0.81
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 185124104968211752, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}
       propertyPath: m_PrimitiveSize.x
-      value: 1.7
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 185124104968211752, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}
       propertyPath: m_PrimitiveSize.y
-      value: 1.7
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 185124104968211752, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}
       propertyPath: m_PrimitiveSize.z
-      value: 3
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 185124104968211752, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}
@@ -3246,27 +3279,27 @@ PrefabInstance:
     - target: {fileID: 185124104968211752, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}
       propertyPath: m_Capsule.Height
-      value: 3
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 185124104968211752, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}
       propertyPath: m_Capsule.Radius
-      value: 0.85
+      value: 0.425
       objectReference: {fileID: 0}
     - target: {fileID: 185124104968211752, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}
       propertyPath: m_Cylinder.Height
-      value: 3
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 185124104968211752, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}
       propertyPath: m_Cylinder.Radius
-      value: 0.85
+      value: 0.425
       objectReference: {fileID: 0}
     - target: {fileID: 185124104968211752, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}
       propertyPath: m_SphereRadius
-      value: 1.5
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 4745543738143748524, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}

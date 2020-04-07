@@ -5,6 +5,7 @@ using Unity.Collections;
 using Unity.Transforms;
 using Unity.Physics;
 using MLAgents.Policies;
+using MLAgents.SideChannels;
 
 public class WarriorAgent : AgentECS
 {
@@ -15,9 +16,11 @@ public class WarriorAgent : AgentECS
     public float meleeAttackCD = 2f;
     public float meleeAttackForce = 5f;
 
-    private float meleeAttackTimeCounter = 0f;
-    private float detectionCounter = 0f;
+    protected float meleeAttackTimeCounter;
+    private bool m_Attack = false;
+    public float hitReward = 0.2f;
 
+    FloatPropertiesChannel m_FloatProperties;
 
     /// <summary>
     /// Initial setup, called when the agent is enabled
@@ -25,21 +28,22 @@ public class WarriorAgent : AgentECS
     public override void Initialize()
     {
         base.Initialize();
+        m_FloatProperties = SideChannelUtils.GetSideChannel<FloatPropertiesChannel>();
         SetResetParams();
     }
 
-    /// <summary>
-    /// Perform actions based on a vector of numbers
-    /// </summary>
-    /// <param name="vectorAction">The list of actions to take</param>
-    public override void OnActionReceived(float[] vectorAction)
+    public override void CollectObservations(MLAgents.Sensors.VectorSensor sensor)
     {
-        if (Alive == false || agentEntity == new Entity()) return;
-        MoveAgent(vectorAction);
+        sensor.AddObservation(System.Convert.ToInt32(Alive));
+        sensor.AddObservation(System.Convert.ToInt32(m_Attack));
     }
 
-    public void MoveAgent(float[] vectorAction)
+    protected override void PerformAction(float[] vectorAction)
     {
+        //state properties
+        m_Attack = false;
+
+        //action properties
         float vertical = vectorAction[0] - 1;
         float horizontal = vectorAction[1] - 1;
         float turn = vectorAction[2] - 1;
@@ -51,40 +55,49 @@ public class WarriorAgent : AgentECS
         else
             SetAnimation("Idle");
 
-        // Apply movement
-        rigidbody.MovePosition(transform.position + dir * moveSpeed * Time.deltaTime);
-        transform.Rotate(transform.up * turn * turnSpeed * Time.deltaTime);
-
-        if (Time.time > detectionCounter + 0.5f)
-        {
-            detectionCounter = Time.time;
-            if (RangeDetection(detectionAccuracy, detectionAngle, meleeAttackRange))
-            {
-                AddReward_Ecs(0.02f);
-            }
-            else
-                AddReward_Ecs(-0.02f);
-        }
+        // if (Time.time > detectionCounter + detectionCD)
+        // {
+        //     detectionCounter = Time.time;
+        //     if (RangeDetection(detectionAccuracy, detectionAngle, meleeAttackRange))
+        //     {
+        //         AddReward_Ecs(0.02f);
+        //     }
+        // }
 
         if (attack == 1f && Time.time > meleeAttackTimeCounter + meleeAttackCD)
         {
             meleeAttackTimeCounter = Time.time;
-            if (RangeDetection(detectionAccuracy, detectionAngle, meleeAttackRange, true))
+            m_Attack = true;
+
+            var attackDir = meleeAttackRange * transform.forward;
+            Debug.DrawRay(transform.position, attackDir, Color.red, 0.2f, true);
+
+            if (SphereLineCast(6, 60f, meleeAttackRange))
             {
-                detectedTarget.GetComponent<Rigidbody>().AddForce(transform.forward * meleeAttackForce, ForceMode.Impulse);
-                MeleeAttack();
+                MeleeAttack(detectedTarget);
+                detectedTarget = null;
             }
-            else
-                AddReward_Ecs(-0.02f);
+            //else
+            //AddReward_Ecs(-0.02f);//Add penalities when attack misses
+
+            // if (RangeDetection(detectionAccuracy, detectionAngle, meleeAttackRange, true))
+            // {
+            //     detectedTarget.GetComponent<Rigidbody>().AddForce(transform.forward * meleeAttackForce, ForceMode.VelocityChange);              
+            //     MeleeAttack();
+            // }
+            // else
+            //     AddReward_Ecs(-0.02f);
         }
+
+        // Apply movement
+        agentRb.AddForce(dir * moveSpeed / 5f, ForceMode.VelocityChange);
+        if (agentRb.velocity.sqrMagnitude > 16f) agentRb.velocity *= 0.95f;
+        transform.Rotate(transform.up * turn * turnSpeed * Time.fixedDeltaTime);
+        //agentRb.MovePosition(transform.position + dir * moveSpeed * Time.fixedDeltaTime);
+
+        AddReward_Ecs(-1f / maxStep);
     }
 
-    /// <summary>
-    /// Read inputs from the keyboard and convert them to a list of actions.
-    /// This is called only when the player wants to control the agent and has set
-    /// Behavior Type to "Heuristic Only" in the Behavior Parameters inspector.
-    /// </summary>
-    /// <returns>A vectorAction array of floats that will be passed into <see cref="AgentAction(float[])"/></returns>
     public override float[] Heuristic()
     {
         float vertical = 1f;
@@ -135,45 +148,67 @@ public class WarriorAgent : AgentECS
         return new float[] { vertical, horizontal, turn, attack };
     }
 
-    /// <summary>
-    /// Reset the agent and area
-    /// </summary>
-    public override void OnEpisodeBegin()
+    public override void SetResetParams()
     {
-        area.OnEpisodeBegin();
-        SetResetParams();
-
-        SetAnimation("Reset");
-        gameObject.tag = teamID == TeamID.TeamOne ? "TeamOne" : "TeamTwo";
-        transform.rotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
-        transform.position = area.GetSpawnPos(teamID);
-        rigidbody.velocity = Vector3.zero;
-        rigidbody.angularVelocity = Vector3.zero;
+        meleeAttackTimeCounter = Time.time;
+        //cirrculum learning setting
+        moveSpeed = m_FloatProperties.GetPropertyWithDefault("move_speed", moveSpeed);
+        meleeAttackRange = m_FloatProperties.GetPropertyWithDefault("attack_range", meleeAttackRange);
     }
 
     /// <summary>
     /// 智能代理攻击函数。若对象已死亡则跳过逻辑
-    /// </summary>    
-    public void MeleeAttack()
+    /// </summary>
+    public void MeleeAttack(Transform target)
     {
         SetAnimation("isAttacking");
-        if (detectedTarget == null) return;
-        var script = detectedTarget.GetComponent<AgentECS>();
-        if (script.Alive == false) return;
+        var script = target.GetComponent<AgentECS>();
+        if (script == null || script.Alive == false) return;
 
-        AddReward_Ecs(0.5f);
+        target.GetComponent<Rigidbody>().AddForce(transform.forward * meleeAttackForce, ForceMode.VelocityChange);
+        if (IsOpponent(target.gameObject))
+            AddReward_Ecs(hitReward);
+        //else
+        //AddReward_Ecs(-0.02f);
+
         script.Damaged(meleeAttackDamage);
-        detectedTarget = null;
     }
-
-    private void SetResetParams()
+    public override void Damaged(int damage)
     {
-        if (agentEntity != new Entity())
-            entityManager.SetComponentData(agentEntity, new AgentData { Reward = 0, teamID = this.teamID, health = this.health });
-
-        //cirrculum learning setting
-        moveSpeed = Academy.Instance.FloatProperties.GetPropertyWithDefault("move_speed", moveSpeed);
-        meleeAttackRange = Academy.Instance.FloatProperties.GetPropertyWithDefault("attack_range", meleeAttackRange);
+        var agentComponent = entityManager.GetComponentData<AgentData>(agentEntity);
+        agentComponent.health -= damage;
+        agentComponent.Reward += -hitReward;
+        entityManager.SetComponentData(agentEntity, agentComponent);
     }
 
+    public bool SphereLineCast(float accuracy, float angle, float attackRange)
+    {
+        //一条向前的射线
+        if (LineCast(Quaternion.identity, Color.green, attackRange)) return true;
+
+        //多一个精确度就多两条对称的射线,每条射线夹角是总角度除与精度
+        float subAngle = (angle / 2) / accuracy;
+        for (int i = 0; i < accuracy; i++)
+        {
+            if (LineCast(Quaternion.Euler(0, -1 * subAngle * (i + 1), 0), Color.green, attackRange)
+                || LineCast(Quaternion.Euler(0, subAngle * (i + 1), 0), Color.green, attackRange))
+                return true;
+        }
+        return false;
+    }
+
+    public bool LineCast(Quaternion eulerAnger, Color DebugColor, float attackRange)
+    {
+        UnityEngine.RaycastHit hit;
+        Debug.DrawRay(transform.position, eulerAnger * transform.forward * attackRange, DebugColor, 0.3f);
+        if (Physics.Raycast(transform.position, eulerAnger * transform.forward, out hit, attackRange))
+        {
+            if (hit.collider.CompareTag("TeamOne") || hit.collider.CompareTag("TeamTwo"))
+            {
+                detectedTarget = hit.collider.transform;
+                return true;
+            }
+        }
+        return false;
+    }
 }

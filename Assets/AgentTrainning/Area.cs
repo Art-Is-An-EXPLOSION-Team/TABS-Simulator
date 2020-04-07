@@ -58,10 +58,10 @@ public class Area : MonoBehaviour
                 {
                     if (winner == agentScript.teamID)
                     {
-                        agentScript.AddReward_Ecs(1f, true);
+                        agentScript.AddReward_Ecs(1f);
                     }
                     else
-                        agentScript.AddReward_Ecs(-0.3f, true);
+                        agentScript.AddReward_Ecs(-1f);
                 }
                 agentScript.EndEpisode();
             }
@@ -90,8 +90,9 @@ public class Area : MonoBehaviour
     {
         if (randomGenerate)
         {
-            m_numsOfAliveTeamOne = m_numsOfTeamOne = Random.Range(2, 7);
-            m_numsOfAliveTeamTwo = m_numsOfTeamTwo = Random.Range(2, 7);
+            var num = Random.Range(3, 7);
+            m_numsOfAliveTeamOne = m_numsOfTeamOne = num;
+            m_numsOfAliveTeamTwo = m_numsOfTeamTwo = num;
         }
         else
         {
@@ -113,10 +114,9 @@ public class Area : MonoBehaviour
                 agentObject = Instantiate<GameObject>(AgentTeamTwo.gameObject, Vector3.zero, Quaternion.identity, transform);
                 agentObject.name = AgentTeamTwo.name + (i - m_numsOfAliveTeamOne).ToString();
             }
-            Rigidbody rigidbody = agentObject.GetComponent<Rigidbody>();
-            rigidbody.velocity = Vector3.zero;
-            rigidbody.angularVelocity = Vector3.zero;
-
+            // Rigidbody rigidbody = agentObject.GetComponent<Rigidbody>();
+            // rigidbody.velocity = Vector3.zero;
+            // rigidbody.angularVelocity = Vector3.zero;
             agentsList.Add(agentObject);
         }
     }

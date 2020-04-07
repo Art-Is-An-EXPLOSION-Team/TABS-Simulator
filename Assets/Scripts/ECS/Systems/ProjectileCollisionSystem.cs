@@ -3,6 +3,7 @@ using Unity.Physics.Systems;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
+using MLAgents;
 using UnityEngine;
 using Collider = Unity.Physics.Collider;
 using Unity.Transforms;
@@ -44,6 +45,7 @@ public class ProjectileCollisionSystem : JobComponentSystem
 
         public void Execute(CollisionEvent collisionEvent)
         {
+
             Entity entityA = collisionEvent.Entities.EntityA;
             Entity entityB = collisionEvent.Entities.EntityB;
             CheckProjectileToAgent(entityA, entityB);

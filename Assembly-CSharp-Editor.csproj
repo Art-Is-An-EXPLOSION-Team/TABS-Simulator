@@ -2,8 +2,6 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
-    <CscToolPath>I:\Program Files\Unity\Editor\2019.3.0f3\Editor\Data\Tools\RoslynScripts</CscToolPath>
-    <CscToolExe>unity_csc.bat</CscToolExe>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -11,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{26BB2326-2BA7-0CD8-226A-2BF1AA635648}</ProjectGuid>
+    <ProjectGuid>{8F9FA3A3-5441-325F-0AF9-87C99F85671F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -47,160 +45,182 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="UnityEngine">
-      <HintPath>I:\Program Files\Unity\Editor\2019.3.0f3\Editor\Data\Managed/UnityEngine/UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor">
-      <HintPath>I:\Program Files\Unity\Editor\2019.3.0f3\Editor\Data\Managed/UnityEditor.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
      <Compile Include="Assets\Arts\polyperfect\- Scripts\AIScripts\Editor\StatsTable.cs" />
      <Compile Include="Assets\Arts\polyperfect\- Scripts\AIScripts\Editor\WanderManagerEditor.cs" />
      <Compile Include="Assets\Arts\polyperfect\- Scripts\AIScripts\Editor\WanderScriptEditor.cs" />
  <Reference Include="UnityEditor.TestRunner">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.TestRunner">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Timeline.Editor">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Cinemachine">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.CacheServer">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/UnityEditor.CacheServer.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/UnityEditor.CacheServer.dll</HintPath>
  </Reference>
  <Reference Include="Unity.ScriptableBuildPipeline.Editor">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
  </Reference>
  <Reference Include="MacBLAS">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/MacBLAS.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/MacBLAS.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Burst">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
  </Reference>
  <Reference Include="Unity.VSCode.Editor">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Entities.Properties">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Entities.Properties.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Entities.Properties.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Jobs">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Jobs.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Jobs.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Jobs.Editor">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Jobs.Editor.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Jobs.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Entities.Editor">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Entities.Editor.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Entities.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Barracuda-editor">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Barracuda-editor.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Barracuda-editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Burst.Editor">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.Core.Editor">
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Collections">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Collections.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.Core.Runtime">
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Scenes.Hybrid">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Scenes.Hybrid.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Scenes.Hybrid.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Scenes.Editor">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Scenes.Editor.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Scenes.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Physics">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Physics.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Physics.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Mathematics.Extensions">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Mathematics.Extensions.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Mathematics.Extensions.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.Universal.Editor">
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Searcher.Editor">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Searcher.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Mathematics.Extensions.Hybrid">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Mathematics.Extensions.Hybrid.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Mathematics.Extensions.Hybrid.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Timeline">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Rendering.Hybrid">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Rendering.Hybrid.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Rendering.Hybrid.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Physics.Hybrid">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Physics.Hybrid.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Physics.Hybrid.dll</HintPath>
  </Reference>
  <Reference Include="Barracuda">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Barracuda.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Barracuda.dll</HintPath>
  </Reference>
  <Reference Include="Unity.CollabProxy.Editor">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
  </Reference>
  <Reference Include="iOSBLAS">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/iOSBLAS.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/iOSBLAS.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Rendering.Hybrid.Editor">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Rendering.Hybrid.Editor.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Rendering.Hybrid.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Entities.BuildUtils">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Entities.BuildUtils.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Entities.BuildUtils.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Rider.Editor">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
  </Reference>
  <Reference Include="BurstBLAS">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/BurstBLAS.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/BurstBLAS.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Entities.Hybrid.EndToEnd.Tests">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Entities.Hybrid.EndToEnd.Tests.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Entities.Hybrid.EndToEnd.Tests.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Entities.Hybrid">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Entities.Hybrid.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Entities.Hybrid.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Mathematics">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Properties">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Properties.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Properties.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Physics.Editor">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Physics.Editor.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Physics.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Entities">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Entities.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Entities.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Transforms">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Transforms.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Transforms.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Transforms.Editor">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Transforms.Editor.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Transforms.Editor.dll</HintPath>
  </Reference>
  <Reference Include="com.unity.cinemachine.editor">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.ScriptableBuildPipeline">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.ScriptableBuildPipeline.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ShaderGraph.Editor">
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Mathematics.Editor">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Transforms.Hybrid">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/ScriptAssemblies/Unity.Transforms.Hybrid.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/ScriptAssemblies/Unity.Transforms.Hybrid.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine">
+ <HintPath>I:/Program Files/Unity/Editor/2019.3.0f3/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>I:/Program Files/Unity/Editor/2019.3.0f3/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -379,6 +399,9 @@
  <Reference Include="UnityEngine.XRModule">
  <HintPath>I:/Program Files/Unity/Editor/2019.3.0f3/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEditor">
+ <HintPath>I:/Program Files/Unity/Editor/2019.3.0f3/Editor/Data/Managed/UnityEditor.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEditor.VR">
  <HintPath>I:/Program Files/Unity/Editor/2019.3.0f3/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
  </Reference>
@@ -392,13 +415,13 @@
  <HintPath>I:/Program Files/Unity/Editor/2019.3.0f3/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
  </Reference>
  <Reference Include="Google.Protobuf">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/PackageCache/com.unity.barracuda@0.6.1-preview/Barracuda/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/PackageCache/com.unity.barracuda@0.6.1-preview/Barracuda/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Burst.Unsafe">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/PackageCache/com.unity.burst@1.3.0-preview.3/Unity.Burst.Unsafe.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/PackageCache/com.unity.burst@1.3.0-preview.3/Unity.Burst.Unsafe.dll</HintPath>
  </Reference>
  <Reference Include="System.Runtime.CompilerServices.Unsafe">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/PackageCache/com.unity.collections@0.6.0-preview.9/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/PackageCache/com.unity.collections@0.6.0-preview.9/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
  </Reference>
  <Reference Include="System.IO.Abstractions">
  <HintPath>E:/Documents/GitHub/ml-agents/com.unity.ml-agents/Plugins/System.IO.Abstractions.dll</HintPath>
@@ -412,8 +435,11 @@
  <Reference Include="System.Interactive.Async">
  <HintPath>E:/Documents/GitHub/ml-agents/com.unity.ml-agents/Plugins/ProtoBuffer/System.Interactive.Async.dll</HintPath>
  </Reference>
+ <Reference Include="ICSharpCode.NRefactory">
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/PackageCache/com.unity.render-pipelines.core@7.1.8/Editor/ShaderGenerator/ICSharpCode.NRefactory.dll</HintPath>
+ </Reference>
  <Reference Include="nunit.framework">
- <HintPath>J:/Program Files/BackUP/TABSNEW/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
+ <HintPath>J:/Program Files/BackUP/TABS-Simulator/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>I:/Program Files/Unity/Editor/2019.3.0f3/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
@@ -772,24 +798,24 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{38EBCFF2-4D30-E4F1-ED04-AFACB0EF98CA}</Project>
+      <Project>{7ECCDBD5-F0EA-3E65-DD84-FDD9C040F0CF}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.ML-Agents.CommunicatorObjects.csproj">
-      <Project>{1EB8128A-840B-65BF-B57D-828BD141555D}</Project>
+      <Project>{E617BD32-F878-A078-B475-F48B70ADA4F9}</Project>
       <Name>Unity.ML-Agents.CommunicatorObjects</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.ML-Agents.Editor.csproj">
-      <Project>{8C15BB15-8382-EB2E-CE2F-55DD44A02662}</Project>
+      <Project>{990F40DD-A776-E21D-2D2B-CA630AB2DC1C}</Project>
       <Name>Unity.ML-Agents.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.ML-Agents.csproj">
-      <Project>{2AD13ABD-E54C-2DD8-B020-C97ACCDE07E3}</Project>
+      <Project>{702A7A33-6BD3-ADF5-D63E-944F5B4903D6}</Project>
       <Name>Unity.ML-Agents</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

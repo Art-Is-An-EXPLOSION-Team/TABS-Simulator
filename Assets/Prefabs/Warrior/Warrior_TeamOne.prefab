@@ -219,6 +219,67 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 3020553681738524518}
   textMeshPro: {fileID: 685396412529899385}
+--- !u!1 &2247179027487081108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1053131358158517239}
+  - component: {fileID: 5989055088456660296}
+  m_Layer: 0
+  m_Name: ReverseSensor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1053131358158517239
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2247179027487081108}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3802366039646746566}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &5989055088456660296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2247179027487081108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: TeamOneBack
+  m_DetectableTags:
+  - wall
+  - TeamOne
+  - TeamTwo
+  - dead
+  m_RaysPerDirection: 2
+  m_MaxRayDegrees: 70
+  m_SphereCastRadius: 0.5
+  m_RayLength: 40
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967291
+  m_ObservationStacks: 1
+  rayHitColor: {r: 1, g: 0, b: 0, a: 1}
+  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
+  m_StartVerticalOffset: 0
+  m_EndVerticalOffset: 0
 --- !u!1 &3805559758968133548
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,7 +644,6 @@ GameObject:
   - component: {fileID: 512883178349669267}
   - component: {fileID: 3020553681738524518}
   - component: {fileID: 3346706633438940969}
-  - component: {fileID: 4005597505487615632}
   - component: {fileID: 396217112528240882}
   - component: {fileID: 396217112528240881}
   - component: {fileID: 396217112528240883}
@@ -601,13 +661,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3805677652880151046}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.6, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3802287750142151692}
   - {fileID: 7528699660239368452}
   - {fileID: 685396412529899367}
+  - {fileID: 1053131358158517239}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -624,7 +685,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 0a7e9bbae0ee147418406f42811d03c0, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -758,7 +819,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    vectorObservationSize: 0
+    vectorObservationSize: 2
     numStackedVectorObservations: 1
     vectorActionSize: 03000000030000000300000002000000
     vectorActionDescriptions: []
@@ -786,18 +847,20 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   maxStep: 5000
   m_RequestDecision: 0
+  m_StepCount: 0
   health: 100
   moveSpeed: 5
-  turnSpeed: 90
-  teamID: 1
+  turnSpeed: 180
+  teamID: 0
   Alive: 1
-  detectionAccuracy: 5
+  detectionAccuracy: 6
   detectionAngle: 60
   detectionCD: 0.5
-  meleeAttackRange: 10
+  meleeAttackRange: 3
   meleeAttackDamage: 40
   meleeAttackCD: 2
-  meleeAttackForce: 5
+  meleeAttackForce: 10
+  hitReward: 0.2
 --- !u!114 &3346706633438940969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -819,37 +882,7 @@ MonoBehaviour:
   m_RaysPerDirection: 4
   m_MaxRayDegrees: 60
   m_SphereCastRadius: 0.5
-  m_RayLength: 20
-  m_RayLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967291
-  m_ObservationStacks: 1
-  rayHitColor: {r: 1, g: 0, b: 0, a: 1}
-  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
-  m_StartVerticalOffset: 0
-  m_EndVerticalOffset: 0
---- !u!114 &4005597505487615632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3805677652880151046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SensorName: TeamOneBack
-  m_DetectableTags:
-  - wall
-  - TeamOne
-  - TeamTwo
-  - dead
-  m_RaysPerDirection: 3
-  m_MaxRayDegrees: 70
-  m_SphereCastRadius: 0.5
-  m_RayLength: 20
+  m_RayLength: 40
   m_RayLayerMask:
     serializedVersion: 2
     m_Bits: 4294967291
@@ -867,12 +900,12 @@ Rigidbody:
   m_GameObject: {fileID: 3805677652880151046}
   serializedVersion: 2
   m_Mass: 10
-  m_Drag: 0
-  m_AngularDrag: 4.35
+  m_Drag: 0.5
+  m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &396217112528240881
 CapsuleCollider:
@@ -884,10 +917,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.85
-  m_Height: 3
+  m_Radius: 0.425
+  m_Height: 1.5
   m_Direction: 2
-  m_Center: {x: 0, y: 0.81, z: 0}
+  m_Center: {x: 0, y: 0.4, z: 0.03}
 --- !u!114 &396217112528240883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1850,7 +1883,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 02cbce4974db8f445b049856c4abbfc3, type: 2}
+  - {fileID: 2100000, guid: 6b72272e2adc146d0bb065e8806f0cf8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2044,7 +2077,7 @@ Transform:
   m_GameObject: {fileID: 3806310609556419800}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3802543374059262958}
   - {fileID: 3808467709266019282}
@@ -3221,22 +3254,22 @@ PrefabInstance:
     - target: {fileID: 185124104968211752, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}
       propertyPath: m_PrimitiveCenter.y
-      value: 0.81
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 185124104968211752, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}
       propertyPath: m_PrimitiveSize.x
-      value: 1.7
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 185124104968211752, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}
       propertyPath: m_PrimitiveSize.y
-      value: 1.7
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 185124104968211752, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}
       propertyPath: m_PrimitiveSize.z
-      value: 3
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 185124104968211752, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}
@@ -3246,27 +3279,27 @@ PrefabInstance:
     - target: {fileID: 185124104968211752, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}
       propertyPath: m_Capsule.Height
-      value: 3
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 185124104968211752, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}
       propertyPath: m_Capsule.Radius
-      value: 0.85
+      value: 0.425
       objectReference: {fileID: 0}
     - target: {fileID: 185124104968211752, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}
       propertyPath: m_Cylinder.Height
-      value: 3
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 185124104968211752, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}
       propertyPath: m_Cylinder.Radius
-      value: 0.85
+      value: 0.425
       objectReference: {fileID: 0}
     - target: {fileID: 185124104968211752, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}
       propertyPath: m_SphereRadius
-      value: 1.5
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 4745543738143748524, guid: a3772aada0149e54eb8d14e487cb7cc0,
         type: 3}

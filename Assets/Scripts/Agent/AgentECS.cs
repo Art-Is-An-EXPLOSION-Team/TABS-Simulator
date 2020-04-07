@@ -16,7 +16,6 @@ public enum TeamID
 public class AgentECS : Agent, IReceiveEntity
 {
     [Header("AgentProperties")]
-
     public int health = 100;
     public float moveSpeed = 5f;
     public float turnSpeed = 90f;
@@ -27,8 +26,9 @@ public class AgentECS : Agent, IReceiveEntity
     public float detectionAccuracy = 5f;
     public float detectionAngle = 60f;
     public float detectionCD = 0.5f;
+    protected float detectionCounter = 0f;
 
-    new protected Rigidbody rigidbody;
+    protected Rigidbody agentRb;
     protected Transform detectedTarget;
 
     protected Area area;
@@ -48,25 +48,72 @@ public class AgentECS : Agent, IReceiveEntity
         area = GetComponentInParent<Area>();
         m_BehaviorParameters = gameObject.GetComponent<BehaviorParameters>();
         teamID = (TeamID)m_BehaviorParameters.TeamId;
-        rigidbody = GetComponent<Rigidbody>();
-        rigidbody.maxAngularVelocity = 500;
+        agentRb = GetComponent<Rigidbody>();
+        agentRb.maxAngularVelocity = 500;
         m_Aniamtor = GetComponent<Animator>();
 
         blobAssetStore = new BlobAssetStore();
     }
 
+    /// <summary>
+    /// Perform actions based on a vector of numbers
+    /// </summary>
+    /// <param name="vectorAction">The list of actions to take</param>
+    public override void OnActionReceived(float[] vectorAction)
+    {
+        if (agentEntity != new Entity())
+        {
+            var agentComponent = entityManager.GetComponentData<AgentData>(agentEntity);
+            if (agentComponent.health <= 0 && Alive)
+            {
+                area.UpdateStatus(gameObject.tag);
+                gameObject.tag = "dead";
+                Alive = false;
+                SetAnimation("isDead");
+            }
+            else if (agentComponent.health > 0)
+            {
+                gameObject.tag = teamID == TeamID.TeamOne ? "TeamOne" : "TeamTwo";
+                Alive = true;
+            }
+
+            if (Alive)
+            {   //PerformAction
+                PerformAction(vectorAction);
+            }
+            //Update Agent's ECSBody
+            entityManager.SetComponentData(agentEntity, new Translation { Value = transform.position });
+            entityManager.SetComponentData(agentEntity, new Rotation { Value = transform.rotation });
+        }
+    }
+
+    /// <summary>
+    /// Reset the agent and area
+    /// </summary>
+    public override void OnEpisodeBegin()
+    {
+        area.OnEpisodeBegin();
+        SetResetParams();
+
+        gameObject.tag = teamID == TeamID.TeamOne ? "TeamOne" : "TeamTwo";
+        transform.rotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
+        transform.position = area.GetSpawnPos(teamID);
+        agentRb.velocity = Vector3.zero;
+        agentRb.angularVelocity = Vector3.zero;
+    }
+
+    public virtual void SetResetParams() { }
+
+    protected virtual void PerformAction(float[] vectorAction) { }
 
     /// <summary>
     /// An ECS Implementation of The original Mono Form AddReward
     /// </summary>
-    public void AddReward_Ecs(float reward, bool outside = false)
+    public void AddReward_Ecs(float reward)
     {
         var agentComponent = entityManager.GetComponentData<AgentData>(agentEntity);
         agentComponent.Reward += reward;
         entityManager.SetComponentData(agentEntity, agentComponent);
-
-        //When the signal came from outside,make sure the reward is simultaneously added
-        if (outside) SetReward(agentComponent.Reward);
     }
 
     /// <summary>
@@ -79,11 +126,24 @@ public class AgentECS : Agent, IReceiveEntity
             if (agentEntity != new Entity())
             {
                 var agentComponent = entityManager.GetComponentData<AgentData>(agentEntity);
+                SetReward(agentComponent.Reward);
+                base.SendInfo();
                 agentComponent.Reward = 0;
                 entityManager.SetComponentData(agentEntity, agentComponent);
             }
         }
-        base.SendInfo();
+    }
+
+    public override void NotifyAgentDone(DoneReason doneReason)
+    {
+        if (agentEntity != new Entity() && doneReason != DoneReason.Disabled)
+        {
+            var agentComponent = entityManager.GetComponentData<AgentData>(agentEntity);
+            SetReward(agentComponent.Reward);
+            //Agent's reward is reset to 0 When Agent is Done
+            entityManager.SetComponentData(agentEntity, new AgentData { Reward = 0, teamID = this.teamID, health = this.health });
+        }
+        base.NotifyAgentDone(doneReason);
     }
 
     #region Utils
@@ -121,6 +181,13 @@ public class AgentECS : Agent, IReceiveEntity
         return false;
     }
 
+    public bool IsOpponent(GameObject col)
+    {
+        if (col.CompareTag("TeamOne") || col.CompareTag("TeamTwo"))
+            if (!col.CompareTag(gameObject.tag)) return true;
+        return false;
+    }
+
     #endregion
 
     #region Animation
@@ -153,37 +220,31 @@ public class AgentECS : Agent, IReceiveEntity
 
     #region  Mono
 
-    private void LateUpdate()
-    {
-        if (agentEntity != new Entity())
-        {
-            if (entityManager.HasComponent<AgentData>(agentEntity))
-            {
-                var agentComponent = entityManager.GetComponentData<AgentData>(agentEntity);
-                if (agentComponent.health <= 0 && Alive)
-                {
-                    area.UpdateStatus(gameObject.tag);
-                    gameObject.tag = "dead";
-                    Alive = false;
-                    SetAnimation("isDead");
-
-                    //Update Agent's reward
-                    SetReward(agentComponent.Reward);
-                }
-                else if (agentComponent.health > 0)
-                {
-                    gameObject.tag = teamID == TeamID.TeamOne ? "TeamOne" : "TeamTwo";
-                    Alive = true;
-
-                    //Update Agent's reward
-                    SetReward(agentComponent.Reward);
-                }
-            }
-            //Update Agent's ECSBody
-            entityManager.SetComponentData(agentEntity, new Translation { Value = transform.position });
-            entityManager.SetComponentData(agentEntity, new Rotation { Value = transform.rotation });
-        }
-    }
+    // private void LateUpdate()
+    // {
+    //     if (agentEntity != new Entity())
+    //     {
+    //         if (entityManager.HasComponent<AgentData>(agentEntity))
+    //         {
+    //             var agentComponent = entityManager.GetComponentData<AgentData>(agentEntity);
+    //             if (agentComponent.health <= 0 && Alive)
+    //             {
+    //                 area.UpdateStatus(gameObject.tag);
+    //                 gameObject.tag = "dead";
+    //                 Alive = false;
+    //                 SetAnimation("isDead");
+    //             }
+    //             else if (agentComponent.health > 0)
+    //             {
+    //                 gameObject.tag = teamID == TeamID.TeamOne ? "TeamOne" : "TeamTwo";
+    //                 Alive = true;
+    //             }
+    //         }
+    //         //Update Agent's ECSBody
+    //         entityManager.SetComponentData(agentEntity, new Translation { Value = transform.position });
+    //         entityManager.SetComponentData(agentEntity, new Rotation { Value = transform.rotation });
+    //     }
+    // }
 
     private void OnDestroy()
     {
@@ -198,12 +259,12 @@ public class AgentECS : Agent, IReceiveEntity
     /// 智能代理受伤调用的函数。代理死亡时返回true (GameObejct交互接口)
     /// </summary>
     /// <param name="damage">遭受的伤害值</param>
-    public void Damaged(int damage)
+    public virtual void Damaged(int damage)
     {
         var agentComponent = entityManager.GetComponentData<AgentData>(agentEntity);
         agentComponent.health -= damage;
+        //agentComponent.Reward += -((float)damage / health);
         entityManager.SetComponentData(agentEntity, agentComponent);
-        AddReward_Ecs(-((float)damage / health));
     }
 
     void IReceiveEntity.SetReceivedEntity(Entity entity)

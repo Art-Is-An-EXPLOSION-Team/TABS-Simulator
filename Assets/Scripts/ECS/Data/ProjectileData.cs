@@ -9,5 +9,4 @@ public struct ProjectileData : IComponentData
     public Entity parent;
     public float timeToLive_Effect;
     public int damage;
-
 }

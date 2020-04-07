@@ -13,18 +13,14 @@ public class TimedDestroySystem : SystemBase
         buffer = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
     }
 
-    // struct CullingJob : IJobForEachWithEntity<TimeToLive>
-    // {
-    //     public EntityCommandBuffer.Concurrent commands;
-    //     public float dt;
-
-    //     public void Execute(Entity entity, int jobIndex, ref TimeToLive timeToLive)
-    //     {
-    //         timeToLive.Value -= dt;
-    //         if (timeToLive.Value <= 0f)
-    //             commands.DestroyEntity(jobIndex, entity);
-    //     }
-    // }
+    public void DestroyProjectile(Entity entity)
+    {
+        Entities.ForEach((ref TimeToLive timeToLive, in ProjectileData projectileData) =>
+                {
+                    if (projectileData.parent == entity)
+                        timeToLive.Value = 0f;
+                }).ScheduleParallel();
+    }
 
     protected override void OnUpdate()
     {
@@ -34,7 +30,7 @@ public class TimedDestroySystem : SystemBase
         {
             timeToLive.Value -= dt;
             if (timeToLive.Value <= 0f)
-                commands.DestroyEntity(0, entity);
+                commands.DestroyEntity(entityInQueryIndex, entity);
         }).ScheduleParallel();
         buffer.AddJobHandleForProducer(Dependency);
     }

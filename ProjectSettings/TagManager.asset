@@ -8,6 +8,16 @@ TagManager:
   - TeamOne
   - TeamTwo
   - dead
+  - ball
+  - purpleAgent
+  - blueAgent
+  - purpleGoal
+  - blueGoal
+  - food
+  - badFood
+  - agent
+  - ground
+  - frozenAgent
   layers:
   - Default
   - TransparentFX

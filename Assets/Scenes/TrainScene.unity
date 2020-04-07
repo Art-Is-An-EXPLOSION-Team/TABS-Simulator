@@ -20,11 +20,11 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.5520116, g: 0.5520116, b: 0.5520116, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
@@ -599,7 +599,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &153326612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -612,9 +612,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da376ad283ccf3b4b80423c0012a9938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AgentTeamOne: {fileID: 117450112686145556, guid: 73fce1f943f958b4da2f4ac49e661cf0,
+  AgentTeamOne: {fileID: 3805677652880151046, guid: b493accdca6de3147b14e335e627ba23,
     type: 3}
-  AgentTeamTwo: {fileID: 1082002820020610527, guid: 95d41e23470f96940aadca2b2e94d865,
+  AgentTeamTwo: {fileID: 4419016185423584782, guid: 6f2d60b4784a0d7408daa34324e4ed1d,
     type: 3}
   range: 19
   randomGenerate: 1
@@ -1209,12 +1209,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AgentTeamOne: {fileID: 3805677652880151046, guid: b493accdca6de3147b14e335e627ba23,
     type: 3}
-  AgentTeamTwo: {fileID: 1082002820020610527, guid: 95d41e23470f96940aadca2b2e94d865,
+  AgentTeamTwo: {fileID: 4419016185423584782, guid: 6f2d60b4784a0d7408daa34324e4ed1d,
     type: 3}
   range: 19
-  randomGenerate: 0
-  numsOfTeamOne_Fixed: 2
-  numsOfTeamTwo_Fixed: 2
+  randomGenerate: 1
+  numsOfTeamOne_Fixed: 0
+  numsOfTeamTwo_Fixed: 0
   m_numsOfAliveTeamOne: 0
   m_numsOfAliveTeamTwo: 0
 --- !u!4 &664004505
@@ -1434,7 +1434,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5bb68a94905ffc0418608fc7e572ea42, type: 2}
+  - {fileID: 2100000, guid: f3fb613d2e20ddd40ac40dc646dca26b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1710,7 +1710,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &734326337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1723,9 +1723,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da376ad283ccf3b4b80423c0012a9938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AgentTeamOne: {fileID: 117450112686145556, guid: 73fce1f943f958b4da2f4ac49e661cf0,
+  AgentTeamOne: {fileID: 3805677652880151046, guid: b493accdca6de3147b14e335e627ba23,
     type: 3}
-  AgentTeamTwo: {fileID: 1082002820020610527, guid: 95d41e23470f96940aadca2b2e94d865,
+  AgentTeamTwo: {fileID: 4419016185423584782, guid: 6f2d60b4784a0d7408daa34324e4ed1d,
     type: 3}
   range: 19
   randomGenerate: 1
@@ -2057,13 +2057,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 784651906}
-  m_LocalRotation: {x: 0.27689537, y: 0, z: 0, w: 0.9609001}
-  m_LocalPosition: {x: 1.94, y: 6.15, z: -20.19}
+  m_LocalRotation: {x: 0.4281466, y: 0, z: 0, w: 0.9037093}
+  m_LocalPosition: {x: 1.49, y: 19.8, z: -21.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 32.15, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 50.7, y: 0, z: 0}
 --- !u!114 &784651910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2890,7 +2890,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &890166881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2903,9 +2903,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da376ad283ccf3b4b80423c0012a9938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AgentTeamOne: {fileID: 117450112686145556, guid: 73fce1f943f958b4da2f4ac49e661cf0,
+  AgentTeamOne: {fileID: 3805677652880151046, guid: b493accdca6de3147b14e335e627ba23,
     type: 3}
-  AgentTeamTwo: {fileID: 1082002820020610527, guid: 95d41e23470f96940aadca2b2e94d865,
+  AgentTeamTwo: {fileID: 4419016185423584782, guid: 6f2d60b4784a0d7408daa34324e4ed1d,
     type: 3}
   range: 19
   randomGenerate: 1
@@ -2944,7 +2944,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &924969922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2957,9 +2957,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da376ad283ccf3b4b80423c0012a9938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AgentTeamOne: {fileID: 117450112686145556, guid: 73fce1f943f958b4da2f4ac49e661cf0,
+  AgentTeamOne: {fileID: 3805677652880151046, guid: b493accdca6de3147b14e335e627ba23,
     type: 3}
-  AgentTeamTwo: {fileID: 1082002820020610527, guid: 95d41e23470f96940aadca2b2e94d865,
+  AgentTeamTwo: {fileID: 4419016185423584782, guid: 6f2d60b4784a0d7408daa34324e4ed1d,
     type: 3}
   range: 19
   randomGenerate: 1
@@ -3833,7 +3833,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.15
+  m_Intensity: 0.6
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -4560,7 +4560,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5bb68a94905ffc0418608fc7e572ea42, type: 2}
+  - {fileID: 2100000, guid: f3fb613d2e20ddd40ac40dc646dca26b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6975,7 +6975,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5bb68a94905ffc0418608fc7e572ea42, type: 2}
+  - {fileID: 2100000, guid: f3fb613d2e20ddd40ac40dc646dca26b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7106,7 +7106,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5bb68a94905ffc0418608fc7e572ea42, type: 2}
+  - {fileID: 2100000, guid: f3fb613d2e20ddd40ac40dc646dca26b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7472,7 +7472,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5bb68a94905ffc0418608fc7e572ea42, type: 2}
+  - {fileID: 2100000, guid: f3fb613d2e20ddd40ac40dc646dca26b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7748,7 +7748,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2123211023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7761,9 +7761,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da376ad283ccf3b4b80423c0012a9938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AgentTeamOne: {fileID: 117450112686145556, guid: 73fce1f943f958b4da2f4ac49e661cf0,
+  AgentTeamOne: {fileID: 3805677652880151046, guid: b493accdca6de3147b14e335e627ba23,
     type: 3}
-  AgentTeamTwo: {fileID: 1082002820020610527, guid: 95d41e23470f96940aadca2b2e94d865,
+  AgentTeamTwo: {fileID: 4419016185423584782, guid: 6f2d60b4784a0d7408daa34324e4ed1d,
     type: 3}
   range: 19
   randomGenerate: 1
@@ -7988,7 +7988,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5bb68a94905ffc0418608fc7e572ea42, type: 2}
+  - {fileID: 2100000, guid: f3fb613d2e20ddd40ac40dc646dca26b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
