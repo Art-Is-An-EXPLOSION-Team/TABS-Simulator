@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\AgentTrainning\Area.cs" />
     <Compile Include="Assets\AgentTrainning\TrainningSettings.cs" />
+    <Compile Include="Assets\Arts\PolygonFantasyHeroCharacters\Scripts\CharacterRandomizer.cs" />
     <Compile Include="Assets\Arts\polyperfect\- Scripts\AIScripts\AIState.cs" />
     <Compile Include="Assets\Arts\polyperfect\- Scripts\AIScripts\AIStats.cs" />
     <Compile Include="Assets\Arts\polyperfect\- Scripts\AIScripts\AudioManager.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Assets\Scripts\ECS\Systems\TimedDestroySystem.cs" />
     <Compile Include="Assets\Scripts\ECS\TimeToLiveComponent.cs" />
     <Compile Include="Assets\Scripts\Utils\CumulativeScript.cs" />
+    <None Include="Assets\Arts\PolygonFantasyHeroCharacters\Shaders\POLYGON_CustomCharacters.shader" />
     <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
       <HintPath>D:/Projects/GitHub/TABS-Simulator/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
     </Reference>
