@@ -33,7 +33,7 @@ public class PenguinAgent : AgentECS
         var settings = GameObjectConversionSettings.FromWorld(World.DefaultGameObjectInjectionWorld, blobAssetStore);
         bulletEntityPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(bulletPrefab, settings);
         timedDestroySystem = World.DefaultGameObjectInjectionWorld.GetOrCreateSystem<TimedDestroySystem>();
-        m_FloatProperties = SideChannelUtils.GetSideChannel<FloatPropertiesChannel>();
+        //m_FloatProperties = SideChannelUtils.GetSideChannel<FloatPropertiesChannel>();
 
         SetResetParams();
     }
@@ -137,8 +137,8 @@ public class PenguinAgent : AgentECS
             timedDestroySystem.DestroyProjectile(agentEntity);
         }
         //cirrculum learning settings      
-        moveSpeed = m_FloatProperties.GetPropertyWithDefault("move_speed", moveSpeed);
-        normalAttackRange = m_FloatProperties.GetPropertyWithDefault("attack_range", normalAttackRange);
+        //moveSpeed = m_FloatProperties.GetPropertyWithDefault("move_speed", moveSpeed);
+        //normalAttackRange = m_FloatProperties.GetPropertyWithDefault("attack_range", normalAttackRange);
     }
 
     #endregion

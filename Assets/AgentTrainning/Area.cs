@@ -11,6 +11,11 @@ public class Area : MonoBehaviour
     public GameObject AgentTeamOne;
     public GameObject AgentTeamTwo;
 
+    public GameObject AgentTeamOneMono;
+    public GameObject AgentTeamTwoMono;
+
+    public bool useECS = true;
+
     public float range = 19f;
     public bool randomGenerate = true;
     public int numsOfTeamOne_Fixed;
@@ -29,13 +34,13 @@ public class Area : MonoBehaviour
     /// <summary>
     /// 当有代理死亡时更新Area状态
     /// </summary>
-    public void UpdateStatus(string tag)
+    public void UpdateStatus(TeamID deadId)
     {
-        if (tag == "TeamOne")
+        if (deadId == TeamID.TeamOne)
             m_numsOfAliveTeamOne--;
         else
-            m_numsOfAliveTeamTwo--;
-        CheckAreaDone();
+            m_numsOfAliveTeamTwo--;      
+        //CheckAreaDone();
     }
 
     public void CheckAreaDone()
@@ -44,27 +49,45 @@ public class Area : MonoBehaviour
         {
             bool rewardFlag = false;
             TeamID winner = TeamID.TeamOne;
-
+            
             if (!(m_numsOfAliveTeamOne == 0 && m_numsOfAliveTeamTwo == 0))//非平局情况下给予奖励
             {
                 rewardFlag = true;
                 winner = m_numsOfAliveTeamOne == 0 ? TeamID.TeamTwo : TeamID.TeamOne;
+                Debug.Log(m_numsOfAliveTeamOne + " ## " + m_numsOfAliveTeamTwo);
+                MatchCount.UpdateStatus(winner);
             }
 
-            foreach (GameObject o in agentsList)
-            {
-                var agentScript = o.GetComponent<AgentECS>();
-                if (rewardFlag)
+            if (useECS)
+                foreach (GameObject o in agentsList)
                 {
-                    if (winner == agentScript.teamID)
+                    var agentScript = o.GetComponent<AgentECS>();
+                    if (rewardFlag)
                     {
-                        agentScript.AddReward_Ecs(1f);
+                        if (winner == agentScript.teamID)
+                        {
+                            agentScript.AddReward_Ecs(1f);
+                        }
+                        else
+                            agentScript.AddReward_Ecs(-1f);
                     }
-                    else
-                        agentScript.AddReward_Ecs(-1f);
+                    agentScript.EndEpisode();
                 }
-                agentScript.EndEpisode();
-            }
+            else
+                foreach (GameObject o in agentsList)
+                {
+                    var agentScript = o.GetComponent<BaseAgent>();
+                    if (rewardFlag)
+                    {
+                        if (winner == agentScript.teamID)
+                        {
+                            agentScript.AddReward(1f);
+                        }
+                        else
+                            agentScript.AddReward(-1f);
+                    }
+                    agentScript.EndEpisode();
+                }
         }
     }
 
@@ -104,19 +127,25 @@ public class Area : MonoBehaviour
 
         for (int i = 0; i < m_numsOfAliveTeamOne + m_numsOfAliveTeamTwo; i++)
         {
+            GameObject target;
             if (i < m_numsOfAliveTeamOne)
             {
-                agentObject = Instantiate<GameObject>(AgentTeamOne.gameObject, Vector3.zero, Quaternion.identity, transform);
-                agentObject.name = AgentTeamOne.name + i.ToString();
+                if (useECS)
+                    target = AgentTeamOne;
+                else
+                    target = AgentTeamOneMono;
+                agentObject = Instantiate<GameObject>(target, Vector3.zero, Quaternion.identity, transform);
+                agentObject.name = target.name + i.ToString();
             }
             else
             {
-                agentObject = Instantiate<GameObject>(AgentTeamTwo.gameObject, Vector3.zero, Quaternion.identity, transform);
-                agentObject.name = AgentTeamTwo.name + (i - m_numsOfAliveTeamOne).ToString();
+                if (useECS)
+                    target = AgentTeamTwo;
+                else
+                    target = AgentTeamTwoMono;
+                agentObject = Instantiate<GameObject>(target, Vector3.zero, Quaternion.identity, transform);
+                agentObject.name = target.name + (i - m_numsOfAliveTeamOne).ToString();
             }
-            // Rigidbody rigidbody = agentObject.GetComponent<Rigidbody>();
-            // rigidbody.velocity = Vector3.zero;
-            // rigidbody.angularVelocity = Vector3.zero;
             agentsList.Add(agentObject);
         }
     }
@@ -125,16 +154,16 @@ public class Area : MonoBehaviour
 
     public Vector3 GetSpawnPos(TeamID teamID)
     {
+        float areaPace = 5f;
+        var pacedRange = range - areaPace > 0 ? range - areaPace : range;
         if (teamID == TeamID.TeamOne)
-            return new Vector3(Random.Range(-range, range), 1f, Random.Range(0, range)) + transform.position + 0.5f * Vector3.up;
-
+            return new Vector3(Random.Range(-pacedRange, pacedRange), 1f, Random.Range(areaPace, pacedRange)) + transform.position;
         else
-            return new Vector3(Random.Range(-range, range), 1f, Random.Range(-range, 0)) + transform.position + 0.5f * Vector3.up;
+            return new Vector3(Random.Range(-pacedRange, pacedRange), 1f, Random.Range(-pacedRange, -areaPace)) + transform.position;
     }
 
     private void RemoveAllAgents()
     {
-        var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
         if (agentsList != null)
         {
             for (int i = 0; i < agentsList.Count; i++)
@@ -180,5 +209,10 @@ public class Area : MonoBehaviour
     public void Start()
     {
 
+    }
+
+    public void LateUpdate()
+    {
+        CheckAreaDone();
     }
 }

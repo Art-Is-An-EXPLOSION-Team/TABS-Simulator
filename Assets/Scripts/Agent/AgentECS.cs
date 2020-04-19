@@ -55,6 +55,28 @@ public class AgentECS : Agent, IReceiveEntity
         blobAssetStore = new BlobAssetStore();
     }
 
+    public override void CollectObservations(MLAgents.Sensors.VectorSensor sensor)
+    {
+        //Check agent's state before action stage so that every agent Alive might do his action in the same frame
+        var agentComponent = entityManager.GetComponentData<AgentData>(agentEntity);
+        if (agentComponent.health > 0 && !Alive)
+        {
+            gameObject.tag = teamID == TeamID.TeamOne ? "TeamOne" : "TeamTwo";
+            Alive = true;
+
+            gameObject.layer = LayerMask.NameToLayer("Default");
+        }
+        else if (agentComponent.health <= 0 && Alive)
+        {
+            gameObject.tag = "dead";
+            Alive = false;
+            SetAnimation("isDead");
+            area.UpdateStatus(teamID);
+
+            gameObject.layer = LayerMask.NameToLayer("Dead");
+        }
+    }
+
     /// <summary>
     /// Perform actions based on a vector of numbers
     /// </summary>
@@ -63,27 +85,34 @@ public class AgentECS : Agent, IReceiveEntity
     {
         if (agentEntity != new Entity())
         {
-            var agentComponent = entityManager.GetComponentData<AgentData>(agentEntity);
-            if (agentComponent.health <= 0 && Alive)
-            {
-                area.UpdateStatus(gameObject.tag);
-                gameObject.tag = "dead";
-                Alive = false;
-                SetAnimation("isDead");
-            }
-            else if (agentComponent.health > 0)
-            {
-                gameObject.tag = teamID == TeamID.TeamOne ? "TeamOne" : "TeamTwo";
-                Alive = true;
-            }
+            //var agentComponent = entityManager.GetComponentData<AgentData>(agentEntity);
+            //if (agentComponent.health > 0 && !Alive)
+            //{
+            //    gameObject.tag = teamID == TeamID.TeamOne ? "TeamOne" : "TeamTwo";
+            //    Alive = true;
+
+            //    gameObject.layer = LayerMask.NameToLayer("Default");
+            //}
+            //else if (agentComponent.health <= 0 && Alive)
+            //{
+            //    gameObject.tag = "dead";
+            //    Alive = false;
+            //    SetAnimation("isDead");
+            //    area.UpdateStatus(teamID);
+
+            //    gameObject.layer = LayerMask.NameToLayer("Dead");
+            //}
 
             if (Alive)
             {   //PerformAction
                 PerformAction(vectorAction);
             }
+
             //Update Agent's ECSBody
             entityManager.SetComponentData(agentEntity, new Translation { Value = transform.position });
             entityManager.SetComponentData(agentEntity, new Rotation { Value = transform.rotation });
+
+            AddReward_Ecs(-1f / (maxStep));
         }
     }
 
@@ -96,7 +125,9 @@ public class AgentECS : Agent, IReceiveEntity
         SetResetParams();
 
         gameObject.tag = teamID == TeamID.TeamOne ? "TeamOne" : "TeamTwo";
-        transform.rotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
+        //transform.rotation = teamID == TeamID.TeamTwo ? Quaternion.Euler(0f, UnityEngine.Random.Range(-60f, 60f), 0f)
+        //    : Quaternion.Euler(0f, UnityEngine.Random.Range(120f, 240f), 0f);
+        transform.rotation = teamID == TeamID.TeamTwo ? Quaternion.Euler(0f, 0f, 0f) : Quaternion.Euler(0f, 180f, 0f);
         transform.position = area.GetSpawnPos(teamID);
         agentRb.velocity = Vector3.zero;
         agentRb.angularVelocity = Vector3.zero;
@@ -134,7 +165,7 @@ public class AgentECS : Agent, IReceiveEntity
         }
     }
 
-    public override void NotifyAgentDone(DoneReason doneReason)
+    protected override void NotifyAgentDone(DoneReason doneReason)
     {
         if (agentEntity != new Entity() && doneReason != DoneReason.Disabled)
         {
@@ -181,10 +212,10 @@ public class AgentECS : Agent, IReceiveEntity
         return false;
     }
 
-    public bool IsOpponent(GameObject col)
+    public bool IsOpponent(GameObject target)
     {
-        if (col.CompareTag("TeamOne") || col.CompareTag("TeamTwo"))
-            if (!col.CompareTag(gameObject.tag)) return true;
+        if (target.CompareTag("TeamOne") || target.CompareTag("TeamTwo"))
+            if (!target.CompareTag(gameObject.tag)) return true;
         return false;
     }
 
@@ -214,6 +245,7 @@ public class AgentECS : Agent, IReceiveEntity
         }
         else
             currentAnimation = "";
+
     }
 
     #endregion

@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74fedc51433e703409e76145c69ded74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 2335166942858079086}
+  agent: {fileID: -360244501516552475}
   textMeshPro: {fileID: 1382316913}
 --- !u!1 &2374619114927160145
 GameObject:
@@ -235,7 +235,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2936571944705123930
 Transform:
   m_ObjectHideFlags: 0
@@ -267,14 +267,13 @@ MonoBehaviour:
   - wall
   - TeamTwo
   - TeamOne
-  - dead
-  m_RaysPerDirection: 2
+  m_RaysPerDirection: 5
   m_MaxRayDegrees: 70
-  m_SphereCastRadius: 0.5
-  m_RayLength: 40
+  m_SphereCastRadius: 0.8
+  m_RayLength: 60
   m_RayLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967291
+    m_Bits: 51
   m_ObservationStacks: 1
   rayHitColor: {r: 1, g: 0, b: 0, a: 1}
   rayMissColor: {r: 1, g: 1, b: 1, a: 1}
@@ -2204,11 +2203,11 @@ GameObject:
   - component: {fileID: 4355170497990044938}
   - component: {fileID: 4377571812341441538}
   - component: {fileID: 1053038497755146139}
-  - component: {fileID: 2335166942858079086}
   - component: {fileID: 2878617735302857505}
   - component: {fileID: 935800096948407546}
   - component: {fileID: 935800096948407545}
   - component: {fileID: 935800096948407547}
+  - component: {fileID: -360244501516552475}
   m_Layer: 0
   m_Name: Warrior_TeamTwo
   m_TagString: TeamTwo
@@ -2386,43 +2385,12 @@ MonoBehaviour:
     vectorActionSize: 03000000030000000300000002000000
     vectorActionDescriptions: []
     vectorActionSpaceType: 0
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 802649817ddddee44bf30ff3b8bbadb1, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: Warrior
   TeamId: 1
   m_UseChildSensors: 1
---- !u!114 &2335166942858079086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4419016185423584782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aae39eb3d9c24974083fbcb6244bd36e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agentParameters:
-    maxStep: 0
-  hasUpgradedFromAgentParameters: 1
-  maxStep: 5000
-  m_RequestDecision: 0
-  m_StepCount: 0
-  health: 100
-  moveSpeed: 5
-  turnSpeed: 180
-  teamID: 1
-  Alive: 1
-  detectionAccuracy: 6
-  detectionAngle: 60
-  detectionCD: 0.5
-  meleeAttackRange: 3
-  meleeAttackDamage: 40
-  meleeAttackCD: 2
-  meleeAttackForce: 10
-  hitReward: 0.2
 --- !u!114 &2878617735302857505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2440,15 +2408,14 @@ MonoBehaviour:
   - wall
   - TeamTwo
   - TeamOne
-  - dead
-  m_RaysPerDirection: 4
-  m_MaxRayDegrees: 60
-  m_SphereCastRadius: 0.5
-  m_RayLength: 40
+  m_RaysPerDirection: 7
+  m_MaxRayDegrees: 95
+  m_SphereCastRadius: 0.8
+  m_RayLength: 60
   m_RayLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967291
-  m_ObservationStacks: 1
+    m_Bits: 51
+  m_ObservationStacks: 3
   rayHitColor: {r: 1, g: 0, b: 0, a: 1}
   rayMissColor: {r: 1, g: 1, b: 1, a: 1}
   m_StartVerticalOffset: 0
@@ -2495,9 +2462,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DecisionPeriod: 5
+  DecisionPeriod: 4
   TakeActionsBetweenDecisions: 1
-  offsetStep: 0
+  offsetStep: 1
+--- !u!114 &-360244501516552475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4419016185423584782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1bda802b7dfdba4bae619d4f2733534, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  maxStep: 5000
+  health: 100
+  moveSpeed: 5
+  turnSpeed: 180
+  teamID: 0
+  Alive: 1
+  detectionAccuracy: 5
+  detectionAngle: 60
+  detectionCD: 0.5
+  meleeAttackRange: 3
+  meleeAttackDamage: 40
+  meleeAttackCD: 2
+  meleeAttackForce: 10
+  freezeTime: 0.5
+  m_Attackable: 0
+  m_Freezed: 0
+  hitAndInjuredReward: 0.5
+  attackMiss: 0.1
 --- !u!1 &4419029413852052090
 GameObject:
   m_ObjectHideFlags: 0

@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74fedc51433e703409e76145c69ded74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 3020553681738524518}
+  agent: {fileID: -4246604703762604399}
   textMeshPro: {fileID: 685396412529899385}
 --- !u!1 &2247179027487081108
 GameObject:
@@ -235,7 +235,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1053131358158517239
 Transform:
   m_ObjectHideFlags: 0
@@ -267,14 +267,13 @@ MonoBehaviour:
   - wall
   - TeamOne
   - TeamTwo
-  - dead
-  m_RaysPerDirection: 2
+  m_RaysPerDirection: 5
   m_MaxRayDegrees: 70
-  m_SphereCastRadius: 0.5
-  m_RayLength: 40
+  m_SphereCastRadius: 0.8
+  m_RayLength: 60
   m_RayLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967291
+    m_Bits: 51
   m_ObservationStacks: 1
   rayHitColor: {r: 1, g: 0, b: 0, a: 1}
   rayMissColor: {r: 1, g: 1, b: 1, a: 1}
@@ -642,11 +641,11 @@ GameObject:
   - component: {fileID: 3887635732801167618}
   - component: {fileID: 3837988518145058826}
   - component: {fileID: 512883178349669267}
-  - component: {fileID: 3020553681738524518}
   - component: {fileID: 3346706633438940969}
   - component: {fileID: 396217112528240882}
   - component: {fileID: 396217112528240881}
   - component: {fileID: 396217112528240883}
+  - component: {fileID: -4246604703762604399}
   m_Layer: 0
   m_Name: Warrior_TeamOne
   m_TagString: TeamOne
@@ -824,43 +823,12 @@ MonoBehaviour:
     vectorActionSize: 03000000030000000300000002000000
     vectorActionDescriptions: []
     vectorActionSpaceType: 0
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 802649817ddddee44bf30ff3b8bbadb1, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: Warrior
   TeamId: 0
   m_UseChildSensors: 1
---- !u!114 &3020553681738524518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3805677652880151046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aae39eb3d9c24974083fbcb6244bd36e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agentParameters:
-    maxStep: 0
-  hasUpgradedFromAgentParameters: 1
-  maxStep: 5000
-  m_RequestDecision: 0
-  m_StepCount: 0
-  health: 100
-  moveSpeed: 5
-  turnSpeed: 180
-  teamID: 0
-  Alive: 1
-  detectionAccuracy: 6
-  detectionAngle: 60
-  detectionCD: 0.5
-  meleeAttackRange: 3
-  meleeAttackDamage: 40
-  meleeAttackCD: 2
-  meleeAttackForce: 10
-  hitReward: 0.2
 --- !u!114 &3346706633438940969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -878,15 +846,14 @@ MonoBehaviour:
   - wall
   - TeamOne
   - TeamTwo
-  - dead
-  m_RaysPerDirection: 4
-  m_MaxRayDegrees: 60
-  m_SphereCastRadius: 0.5
-  m_RayLength: 40
+  m_RaysPerDirection: 7
+  m_MaxRayDegrees: 95
+  m_SphereCastRadius: 0.8
+  m_RayLength: 60
   m_RayLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967291
-  m_ObservationStacks: 1
+    m_Bits: 51
+  m_ObservationStacks: 3
   rayHitColor: {r: 1, g: 0, b: 0, a: 1}
   rayMissColor: {r: 1, g: 1, b: 1, a: 1}
   m_StartVerticalOffset: 0
@@ -920,7 +887,7 @@ CapsuleCollider:
   m_Radius: 0.425
   m_Height: 1.5
   m_Direction: 2
-  m_Center: {x: 0, y: 0.4, z: 0.03}
+  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!114 &396217112528240883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -933,9 +900,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DecisionPeriod: 5
+  DecisionPeriod: 4
   TakeActionsBetweenDecisions: 1
-  offsetStep: 0
+  offsetStep: 1
+--- !u!114 &-4246604703762604399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3805677652880151046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1bda802b7dfdba4bae619d4f2733534, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  maxStep: 5000
+  health: 100
+  moveSpeed: 5
+  turnSpeed: 180
+  teamID: 0
+  Alive: 1
+  detectionAccuracy: 5
+  detectionAngle: 60
+  detectionCD: 0.5
+  meleeAttackRange: 3
+  meleeAttackDamage: 40
+  meleeAttackCD: 2
+  meleeAttackForce: 10
+  freezeTime: 0.5
+  m_Attackable: 0
+  m_Freezed: 0
+  hitAndInjuredReward: 0.5
+  attackMiss: 0.1
 --- !u!1 &3805699677411145330
 GameObject:
   m_ObjectHideFlags: 0

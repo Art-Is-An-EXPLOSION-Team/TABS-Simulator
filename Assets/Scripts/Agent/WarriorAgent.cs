@@ -18,9 +18,12 @@ public class WarriorAgent : AgentECS
 
     protected float meleeAttackTimeCounter;
     private bool m_Attack = false;
-    public float hitReward = 0.2f;
 
     FloatPropertiesChannel m_FloatProperties;
+
+    //Reward Parameters
+    public float hitAndInjuredReward = 0.05f;
+    public float attackMiss = 0.02f;
 
     /// <summary>
     /// Initial setup, called when the agent is enabled
@@ -28,7 +31,7 @@ public class WarriorAgent : AgentECS
     public override void Initialize()
     {
         base.Initialize();
-        m_FloatProperties = SideChannelUtils.GetSideChannel<FloatPropertiesChannel>();
+       // m_FloatProperties = SideChannelUtils.GetSideChannel<FloatPropertiesChannel>();
         SetResetParams();
     }
 
@@ -69,33 +72,20 @@ public class WarriorAgent : AgentECS
             meleeAttackTimeCounter = Time.time;
             m_Attack = true;
 
-            var attackDir = meleeAttackRange * transform.forward;
-            Debug.DrawRay(transform.position, attackDir, Color.red, 0.2f, true);
-
-            if (SphereLineCast(6, 60f, meleeAttackRange))
+            if (SphereLineCast(detectionAccuracy, detectionAngle, meleeAttackRange))
             {
                 MeleeAttack(detectedTarget);
                 detectedTarget = null;
             }
-            //else
-            //AddReward_Ecs(-0.02f);//Add penalities when attack misses
-
-            // if (RangeDetection(detectionAccuracy, detectionAngle, meleeAttackRange, true))
-            // {
-            //     detectedTarget.GetComponent<Rigidbody>().AddForce(transform.forward * meleeAttackForce, ForceMode.VelocityChange);              
-            //     MeleeAttack();
-            // }
-            // else
-            //     AddReward_Ecs(-0.02f);
+            else
+                AddReward_Ecs(-attackMiss);//Add penalities when attack misses
         }
 
         // Apply movement
         agentRb.AddForce(dir * moveSpeed / 5f, ForceMode.VelocityChange);
         if (agentRb.velocity.sqrMagnitude > 16f) agentRb.velocity *= 0.95f;
         transform.Rotate(transform.up * turn * turnSpeed * Time.fixedDeltaTime);
-        //agentRb.MovePosition(transform.position + dir * moveSpeed * Time.fixedDeltaTime);
-
-        AddReward_Ecs(-1f / maxStep);
+        //agentRb.MovePosition(transform.position + dir * moveSpeed * Time.fixedDeltaTime);      
     }
 
     public override float[] Heuristic()
@@ -151,9 +141,10 @@ public class WarriorAgent : AgentECS
     public override void SetResetParams()
     {
         meleeAttackTimeCounter = Time.time;
+
         //cirrculum learning setting
-        moveSpeed = m_FloatProperties.GetPropertyWithDefault("move_speed", moveSpeed);
-        meleeAttackRange = m_FloatProperties.GetPropertyWithDefault("attack_range", meleeAttackRange);
+        //moveSpeed = m_FloatProperties.GetPropertyWithDefault("move_speed", moveSpeed);
+        //meleeAttackRange = m_FloatProperties.GetPropertyWithDefault("attack_range", meleeAttackRange);
     }
 
     /// <summary>
@@ -167,9 +158,9 @@ public class WarriorAgent : AgentECS
 
         target.GetComponent<Rigidbody>().AddForce(transform.forward * meleeAttackForce, ForceMode.VelocityChange);
         if (IsOpponent(target.gameObject))
-            AddReward_Ecs(hitReward);
-        //else
-        //AddReward_Ecs(-0.02f);
+            AddReward_Ecs(hitAndInjuredReward);
+        else
+            AddReward_Ecs(-hitAndInjuredReward);
 
         script.Damaged(meleeAttackDamage);
     }
@@ -177,7 +168,7 @@ public class WarriorAgent : AgentECS
     {
         var agentComponent = entityManager.GetComponentData<AgentData>(agentEntity);
         agentComponent.health -= damage;
-        agentComponent.Reward += -hitReward;
+        agentComponent.Reward += -hitAndInjuredReward;
         entityManager.SetComponentData(agentEntity, agentComponent);
     }
 
